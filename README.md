@@ -1,1 +1,0 @@
-# yared_blog
