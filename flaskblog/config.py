@@ -1,9 +1,16 @@
 import os
-
+from dotenv import load_dotenv
+# Absolute directory path
+basedir = os.path.abspath(os.path.dirname(__file__))
+# Looks for and loads .env file
+# Can access env variables using os.environ.get(<VARNAME>)
+load_dotenv(os.path.join(basedir, '.env'))
 
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
+     # ~~ Migration Repository ~~ #
+    SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAIL_SERVER = 'smtp.googlemail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
