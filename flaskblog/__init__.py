@@ -2,37 +2,14 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-from flask_mail import Mail
-from flaskblog.config import Config
-from flask_migrate import Migrate
 
-
-db = SQLAlchemy()
-migrate = Migrate()
-bcrypt = Bcrypt()
-login_manager = LoginManager()
-login_manager.login_view = 'users.login'
+application = Flask(__name__)
+application.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
+application.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blog:enateye05@aadkyxw3e0k8ep$e0k8ep.coxgdsu0jfsg.us-west-2.rds.amazonaws.com/https://us-west-2.console.aws.am$aws.amazon.com/rds/home?region=us-west-2#database:id=aadkyxw3e0k8ep;is-cluster=f$'
+db = SQLAlchemy(application)
+bcrypt = Bcrypt(application)
+login_manager = LoginManager(application)
+login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
-mail = Mail()
 
-
-def create_app(config_class=Config):
-    application = Flask(__name__)
-    application.config.from_object(Config)
-
-    db.init_app(application)
-    bcrypt.init_app(application)
-    login_manager.init_app(application)
-    mail.init_app(application)
-    migrate.init_app(application, db)
-
-    from flaskblog.users.routes import users
-    from flaskblog.posts.routes import posts
-    from flaskblog.main.routes import main
-    from flaskblog.errors.handlers import errors
-    application.register_blueprint(users)
-    application.register_blueprint(posts)
-    application.register_blueprint(main)
-    application.register_blueprint(errors)
-
-    return application
+from flaskblog import routes
