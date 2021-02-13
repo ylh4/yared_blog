@@ -4,8 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm
 
 application = Flask(__name__)
-application.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
-application.config['SQLALCHEMY_DATABASE_URI'] = 'mysql:///aa8vg2mpgsqgdm.coxgdsu0jfsg.us-west-2.rds.amazonaws.com'
+application.config['SQLALCHEMY_DATABASE_URI']='mysql+mysqlconnector://yared:enateye05@aa8vg2mpgsqgdm.coxgdsu0jfsg.us-west-2.rds.amazonaws.com/aa8vg2mpgsqgdm'.format(user='yared', password='enateye05', server='localhost', database='aa8vg2mpgsqgdm')
+
 db = SQLAlchemy(application)
 
 
